@@ -13,9 +13,7 @@ class TimeValidator:
         if 'time' in value:
             try:
                 tmp_val = dict(value).get(self.field)
-                print(value)
                 tmp_val = tmp_val.split(':')
-                time = datetime.timedelta(hours=int(tmp_val[0]), minutes=int(tmp_val[1]), seconds=int(tmp_val[-1]))
 
                 if len(tmp_val) != 3:
                     raise ValidationError('Время выполнения должно быть в формате "HH:MM:SS"')
@@ -25,9 +23,9 @@ class TimeValidator:
             except IndexError:
                 raise ValidationError('Время выполнения должно быть в формате "HH:MM:SS"')
 
+
 class TimeToCompleteValidator:
     """Проверка на формат времени на выполнение"""
-
     def __init__(self, field):
         self.field = field
 
@@ -36,9 +34,10 @@ class TimeToCompleteValidator:
         if 'time_to_complete' in value:
             try:
                 tmp_val = dict(value).get(self.field)
-                print(value)
+                # print(value)
                 tmp_val = tmp_val.split(':')
-                time_to_complete = datetime.timedelta(hours=int(tmp_val[0]), minutes=int(tmp_val[1]), seconds=int(tmp_val[-1]))
+                time_to_complete = datetime.timedelta(hours=int(tmp_val[0]), minutes=int(tmp_val[1]),
+                                                      seconds=int(tmp_val[-1]))
 
                 if len(tmp_val) != 3:
                     raise ValidationError('Время выполнения должно быть в формате "HH:MM:SS"')
@@ -67,17 +66,19 @@ class PeriodicityValidator:
 
 
 class IncompatibilityValidator:
+
     """Проверка на совместимости"""
 
     def __init__(self, fields):
-        self.fields = fields # fields = ['associated_habit', 'reward', 'useful_bonus']
+
+        self.fields = fields
 
     def __call__(self, value):
 
         if 'associated_habit' in value or 'reward' in value or 'pleasantly' in value:
-            print(self.fields)
+            # print(self.fields)
             # print(self.request.user)
-            if dict(value).get('associated_habit') != None and dict(value).get('reward') != None:
+            if dict(value).get('associated_habit') is not None and dict(value).get('reward') is not None:
                 raise ValidationError("Не должно быть заполнено одновременно и поле вознаграждения, "
                                       "и поле связанной привычки. Можно заполнить только одно из двух полей.")
 

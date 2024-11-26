@@ -1,13 +1,10 @@
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
 from habits.models import Habit
 from habits.paginators import HabitPaginator
 from habits.serializers import HabitSerializer
 from users.permissions import IsOwner
-
-
 
 """CRUD Habit"""
 
@@ -18,9 +15,9 @@ class HabitCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        data = request.data
-        data['user'] = self.request.user
-        serializer = self.get_serializer(data=data)
+        # data = request.data
+        # data['user'] = self.request.user
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
@@ -87,13 +84,13 @@ class HabitUpdateAPIView(generics.UpdateAPIView):
     queryset = Habit.objects.all()
     permission_classes = [IsAuthenticated, IsOwner]
 
-    def put(self, request, *args, **kwargs):
-        instance = self.get_object()
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        instance = self.get_object()
-        return self.partial_update(request, *args, **kwargs)
+    # def put(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     return self.update(request, *args, **kwargs)
+    #
+    # def patch(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     return self.partial_update(request, *args, **kwargs)
 
 
 class HabitDestroyAPIView(generics.DestroyAPIView):
