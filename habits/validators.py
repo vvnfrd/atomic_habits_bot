@@ -4,7 +4,7 @@ from rest_framework.serializers import ValidationError
 
 
 class TimeValidator:
-
+    """Проверка на формат времени"""
     def __init__(self, field):
         self.field = field
 
@@ -26,6 +26,7 @@ class TimeValidator:
                 raise ValidationError('Время выполнения должно быть в формате "HH:MM:SS"')
 
 class TimeToCompleteValidator:
+    """Проверка на формат времени на выполнение"""
 
     def __init__(self, field):
         self.field = field
@@ -51,6 +52,7 @@ class TimeToCompleteValidator:
 
 
 class PeriodicityValidator:
+    """Проверка на правильность периодичности"""
 
     def __init__(self, field):
         self.field = field
@@ -65,6 +67,8 @@ class PeriodicityValidator:
 
 
 class IncompatibilityValidator:
+    """Проверка на совместимости"""
+
     def __init__(self, fields):
         self.fields = fields # fields = ['associated_habit', 'reward', 'useful_bonus']
 

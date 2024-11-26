@@ -7,6 +7,8 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class User(AbstractUser):
+    """Модель пользователя"""
+
     username = None
     email = models.EmailField(unique=True, verbose_name='почта')
     telegram_id = models.CharField(unique=True, verbose_name='telegram id', **NULLABLE)
