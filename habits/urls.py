@@ -6,7 +6,6 @@ from habits.views import HabitCreateAPIView, HabitListAPIView, HabitRetrieveAPIV
 app_name = HabitsConfig.name
 
 urlpatterns = [
-    #CRUD Привычек
     path('habits/create/', HabitCreateAPIView.as_view(), name='habit-create'),
     path('habits/', HabitListAPIView.as_view(), name='habit-list'),
     path('habits/public/', HabitPublicListAPIView.as_view(), name='habit-list'),

@@ -1,4 +1,4 @@
-from rest_framework import serializers, request
+from rest_framework import serializers
 from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.utils import model_meta
 
@@ -10,7 +10,8 @@ class HabitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Habit
-        fields = ('id', 'place', 'time', 'action', 'pleasantly', 'associated_habit', 'periodicity', 'reward', 'time_to_complete', 'is_public')
+        fields = ('id', 'place', 'time', 'action', 'pleasantly', 'associated_habit', 'periodicity',
+                  'reward', 'time_to_complete', 'is_public')
         validators = [TimeToCompleteValidator(field='time_to_complete'),
                       PeriodicityValidator(field='periodicity'),
                       IncompatibilityValidator(fields=['associated_habit', 'reward', 'pleasantly']),
