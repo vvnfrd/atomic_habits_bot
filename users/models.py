@@ -7,17 +7,19 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class User(AbstractUser):
-    telegram_id = models.CharField(unique=True, verbose_name='telegram id')
+    username = None
+    email = models.EmailField(unique=True, verbose_name='почта')
+    telegram_id = models.CharField(unique=True, verbose_name='telegram id', **NULLABLE)
     chat_id = models.CharField(unique=True, verbose_name='telegram id', **NULLABLE)
     first_name = models.CharField(max_length=35, verbose_name='имя', **NULLABLE)
     last_name = models.CharField(max_length=35, verbose_name='имя', **NULLABLE)
 
 
-    USERNAME_FIELD = 'telegram_id'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return f'{self.telegram_id}'
+        return f'{self.email}'
 
     class Meta:
         verbose_name = 'пользователь'
