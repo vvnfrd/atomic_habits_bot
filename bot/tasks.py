@@ -1,12 +1,10 @@
 import datetime
 import calendar
-from django.conf import settings
-
 from habits.models import Habit
 from users.models import User
-from rest_framework.response import Response
 from celery import shared_task
 from bot.main_bot import bot
+
 
 @shared_task
 def notifications():
@@ -32,12 +30,14 @@ def notifications():
             time_now = datetime_now.time()
 
             if habit.next_action is None:
-                habit.next_action = datetime_now.replace(hour=task_time.hour, minute=task_time.minute, second=task_time.second,
-                                              microsecond=0)
+                habit.next_action = datetime_now.replace(hour=task_time.hour,
+                                                         minute=task_time.minute,
+                                                         second=task_time.second,
+                                                         microsecond=0)
                 habit.save()
 
-
             while True:
+
                 next_action = habit.next_action
                 if task_time < time_now and datetime_now.day == next_action.day:
                     if habit.place is None and habit.reward is None:
@@ -55,8 +55,8 @@ def notifications():
                     except ValueError:
                         days_in_month = calendar.monthrange(datetime_now.year, datetime_now.month)[-1]
                         if habit.periodicity == 1 or days_in_month - datetime_now.day >= 0:
-                            habit.next_action = habit.next_action.replace(day=periodicity - (days_in_month - datetime_now.day),
-                                                                    month=next_action.month + 1)
+                            habit.next_action = habit.next_action.replace(
+                                day=periodicity - (days_in_month - datetime_now.day), month=next_action.month + 1)
                             habit.save()
                     finally:
                         break
@@ -64,4 +64,3 @@ def notifications():
                     habit_db = Habit.objects.get(id=habit.id)
                     habit_db.next_action = habit.next_action
                     habit_db.save()
-
