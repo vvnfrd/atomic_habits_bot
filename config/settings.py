@@ -168,12 +168,12 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_TIMEZONE = "Asia/Novosibirsk"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-# CELERY_BEAT_SCHEDULE = {
-#     'user_turn_is_active': {
-#         'task': 'users.tasks.user_turn_is_active',
-#         'schedule': timedelta(minutes=5),
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    'notifications': {
+        'task': 'bot.tasks.notifications',
+        'schedule': timedelta(minutes=1),
+    },
+}
 
 BOT_TOKEN = '7276945260:AAGNv397RhjuAG0hygatGJ7_0cjPCSYDAiQ'
 

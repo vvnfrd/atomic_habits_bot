@@ -11,6 +11,7 @@ class Habit(models.Model):
                              on_delete=models.CASCADE, verbose_name='пользователь', **NULLABLE)
     place = models.CharField(max_length=100, verbose_name='место привычки', **NULLABLE)
     time = models.CharField(default="12:00:00", verbose_name='время когда необходимо выполнять', **NULLABLE)
+    next_action = models.DateTimeField(verbose_name='следующая дата выполнения', **NULLABLE)
     action = models.CharField(max_length=100, verbose_name='действие')
     pleasantly = models.BooleanField(default=False, verbose_name='признак полезной привычки', **NULLABLE)
     associated_habit = models.ForeignKey("Habit",
