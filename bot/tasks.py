@@ -8,7 +8,6 @@ from bot.main_bot import bot
 
 @shared_task
 def notifications():
-    print('opa')
     habits_list = []
     telegram_users = []
     for user in User.objects.all():
