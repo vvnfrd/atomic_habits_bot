@@ -9,4 +9,17 @@ SPA веб-приложение
 
 После каждого пуша оставляю бэкап БД в fixtures/backup.json
 
+Телеграм бот имеет возможность авторизироваться в DRF и оставлять свой tg_id в моделях Users,
+позволяющий рассылать уведомления когда нужно делать привычку.
 
+Алгоритм включения:
+
+python manage.py runserver,
+redis-cli / redis-server,
+python manage.py start_bot,
+celery -A config worker -l INFO -P eventlet,
+celery -A config beat -l INFO
+
+tg bot:
+
+https://t.me/HabitsSkyCourseBot
