@@ -91,7 +91,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'atomic_habits',
         'USER': 'postgres',
-        'PASSWORD': '13799731'
+        'PASSWORD': '13799731',
+        'HOST': 'db'
     }
 }
 
@@ -163,8 +164,8 @@ SIMPLE_JWT = {
 
 }
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_TIMEZONE = "Asia/Novosibirsk"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
