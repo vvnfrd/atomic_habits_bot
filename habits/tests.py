@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.exceptions import ErrorDetail
 from rest_framework.test import APITestCase, force_authenticate, APIRequestFactory
 
 from habits.models import Habit
@@ -118,3 +119,22 @@ class HabitTestCase(APITestCase):
         self.assertTrue(before)
         self.assertFalse(after)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_time_validator(self):
+
+        view = HabitUpdateAPIView.as_view()
+        habit = Habit.objects.create(
+            action='test_time_validator',
+            time='17:00:00',
+            time_to_complete='00:01:30',
+            user=self.user
+        )
+        data = {'time': 'a;lsdk;l'}
+        request = self.factory.patch('lesson/update/', data=data)
+        force_authenticate(request, user=self.user)
+        response = view(request, pk=habit.id)
+
+        result = [ErrorDetail(string='Время выполнения должно быть в формате "HH:MM:SS"', code='invalid')]
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['non_field_errors'], result)
